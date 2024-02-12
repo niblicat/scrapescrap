@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from bs4 import Tag
 import requests
+import json
 from dataclasses import dataclass
 
 @dataclass
@@ -9,10 +10,21 @@ class Slide():
     image: str
     text: str
 
+    def to_dict(self) -> dict:
+        return {
+            "header": self.header,
+            "image": self.image,
+            "text": self.text
+        }
+
 @dataclass
 class PageContent():
     title: str
     slides: list[Slide]
+
+    def to_json_string(self) -> str:
+        dicts = [slide.to_dict() for slide in self.slides]
+        return json.dumps({"title": self.title, "slides": dicts}, indent=2)
 
 def GetURLsFromText(file: str = "input.txt") -> list[str]:
     with open(file) as text:
@@ -67,27 +79,25 @@ def GetContentFromPage(pageURL) -> PageContent:
     
     return PageContent(title=title, slides=slideList)
 
-def ScrapeFromFileToText(file: str = "input.txt") -> None:
-#     urls = ["https://www.theonion.com/pros-and-cons-of-shutting-down-the-border-1851235755",
-# "https://www.theonion.com/follow-taylor-swift-s-every-move-with-our-real-time-jet-1851240542",
-# "https://www.theonion.com/signs-you-are-a-beta-male-1851221877",
-# "https://www.theonion.com/fans-speculate-whether-taylor-swift-will-make-it-to-sup-1851243533",
-# "https://www.theonion.com/another-field-goal-blocked-by-cirque-du-soleil-performe-1851243517"]
-#     for url in urls:
-#         print("url", url)
-#         GetContentFromPage(url)
-    urls = GetURLsFromText(file)
+def ScrapeFromURLToJson(url: str, output: str = "output") -> None:
+    page: PageContent = GetContentFromPage(url)
+    pageStr = page.to_json_string()
+    outputFile = output + ".json"
+    with open(outputFile, 'w') as file:
+        file.write(pageStr)
+
+def ScrapeFromFile(inputFile: str = "input.txt", baseOutput: str = "output") -> None:
+    urls = GetURLsFromText(inputFile)
+    i = 0
     for url in urls:
         print("url", url)
-        GetContentFromPage(url)
+        currentOutput = baseOutput + str(i)
+        i += 1
+        ScrapeFromURLToJson(url, currentOutput)
+
+    
 def main() -> None:
-    # GetContentFromPage("https://www.theonion.com/pros-and-cons-of-shutting-down-the-border-1851235755")
-    # GetContentFromPage("https://www.theonion.com/follow-taylor-swift-s-every-move-with-our-real-time-jet-1851240542")
-    # GetContentFromPage("https://www.theonion.com/signs-you-are-a-beta-male-1851221877")
-    # GetContentFromPage("https://www.theonion.com/fans-speculate-whether-taylor-swift-will-make-it-to-sup-1851243533")
-    # GetContentFromPage("https://www.theonion.com/another-field-goal-blocked-by-cirque-du-soleil-performe-1851243517")
-    # print(GetURLsFromText("input.txt"))
-    ScrapeFromFileToText("input.txt")
+    ScrapeFromFile("input.txt")
 
 if __name__ == "__main__":
     main()
