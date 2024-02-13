@@ -1,4 +1,4 @@
-# The Onion Article Web Scraper
+# [The Onion](https://www.theonion.com) Article Web Scraper
 
 Scrape multiple URLs provided in a text file, each outputting as a JSON file.
 
