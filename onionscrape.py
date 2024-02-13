@@ -2,7 +2,20 @@ from bs4 import BeautifulSoup
 from bs4 import Tag
 import requests
 import json
+from argparse import ArgumentParser
+import os
 from dataclasses import dataclass
+
+class colour:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 @dataclass
 class Slide():
@@ -90,14 +103,30 @@ def ScrapeFromFile(inputFile: str = "input.txt", baseOutput: str = "output") -> 
     urls = GetURLsFromText(inputFile)
     i = 0
     for url in urls:
-        print("url", url)
+        print(colour.OKGREEN + "url:" + colour.ENDC, url)
         currentOutput = baseOutput + str(i)
         i += 1
         ScrapeFromURLToJson(url, currentOutput)
 
     
 def main() -> None:
-    ScrapeFromFile("input.txt")
+    parser = ArgumentParser()
+    parser.add_argument(help="Input text file", dest="input_path", type=str)
+    parser.add_argument("--output", help="Output file base name (no extension)", dest="output_base", type=str, default="output")
+    args = parser.parse_args()
+    inputPath = args.input_path
+    outputBase = args.output_base
+
+    inputType = os.path.splitext(inputPath)[-1].lower()
+    if (inputType == ""):
+        inputPath += ".txt"
+        print(colour.WARNING + "Normalising input by adding .txt extension..." + colour.ENDC)
+    else:
+        print(colour.FAIL + "Invalid file type. Please use a .txt file." + colour.ENDC)
+        exit()
+    
+    print(colour.BOLD + "Scraping urls..." + colour.ENDC)
+    ScrapeFromFile(inputPath, outputBase)
 
 if __name__ == "__main__":
     main()
