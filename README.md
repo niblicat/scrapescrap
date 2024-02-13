@@ -43,10 +43,10 @@ python onionscrape.py input.txt --output funny
 ```
 This will output `funny0.json`, `funny1.json`, ... , `funnyN.json` given an `input.txt` file containing N URLs.
 
-## Limitations
-
-This scraper will not work on pages featuring only an image with no paragraph content.
-
 ## Output
 
 See output0.json for an example of the expected output for the [Pros and Cons of Shutting Down The Border article](https://www.theonion.com/pros-and-cons-of-shutting-down-the-border-1851235755).
+
+## Limitations
+
+This scraper will not work on pages featuring only an image with no paragraph content.
