@@ -1,4 +1,5 @@
-
+from dataclasses import dataclass
+import json
 
 class colour:
     HEADER = '\033[95m'

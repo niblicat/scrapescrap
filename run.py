@@ -1,10 +1,11 @@
 from bs4 import BeautifulSoup
 from bs4 import Tag
 import requests
-import json
+
 from argparse import ArgumentParser
 import os
-from dataclasses import dataclass
+
+
 
 def main() -> None: 
     parser = ArgumentParser()
