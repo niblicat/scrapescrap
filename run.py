@@ -5,6 +5,8 @@ import requests
 from argparse import ArgumentParser
 import os
 
+from essentials import colour
+from module_2.htmlparser import ScrapeFromFile
 
 
 def main() -> None: 

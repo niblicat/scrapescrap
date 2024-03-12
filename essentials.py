@@ -1,7 +1,11 @@
+#
 from dataclasses import dataclass
 import json
 
 class colour:
+    """
+    Holds definitions for several colours to output in the terminal
+    """
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'
