@@ -18,7 +18,10 @@ class colour:
     UNDERLINE = '\033[4m'
 
 @dataclass
-class Slide():
+class Slide:
+    """
+    Contains the basic data for a slide
+    """
     header: str
     image: str
     text: str
@@ -32,6 +35,10 @@ class Slide():
 
 @dataclass
 class PageContent():
+    """
+    Holds the content for a webpage
+    Contains a title and list of slides
+    """
     title: str
     slides: list[Slide]
 
@@ -40,14 +47,17 @@ class PageContent():
         return json.dumps({"title": self.title, "slides": dicts}, indent=2)
 
 def GetURLsFromText(file: str = "input.txt") -> list[str]:
+    """
+    Returns a list of URLS given a properly formatted input txt formatted file
+    """
     with open(file) as text:
         urls = text.read().split()
     return urls
 
-def ExtractText(raw: str) -> str:
-    return raw[-1]
-
 def ParseFirstSlide(section: Tag) -> Slide:
+    """
+    Parses a slide without a header, which is typically the first slide
+    """
     contentDiv: Tag = section.contents[1]
     imageLink = contentDiv.img['src']
     # print(imageLink)
@@ -56,6 +66,9 @@ def ParseFirstSlide(section: Tag) -> Slide:
     return Slide(header="", image=imageLink, text=content)
 
 def ParseSlide(section: Tag) -> Slide:
+    """
+    Parses a typically formatted slide
+    """
     headerDiv: Tag = section.contents[3]
     header = headerDiv.h2.getText()
     # print(header) # Slide head
@@ -67,6 +80,10 @@ def ParseSlide(section: Tag) -> Slide:
     return Slide(header=header, image=imageLink, text=content)
 
 def GetContentFromPage(pageURL) -> PageContent:
+    """
+    Retrieves the main page data from a URL and retrieves significant information
+    """
+    
     # get page data from URL
     page = requests.get(pageURL)
     # pass page text through beautiful soup
@@ -92,7 +109,10 @@ def GetContentFromPage(pageURL) -> PageContent:
     
     return PageContent(title=title, slides=slideList)
 
-def ScrapeFromURLToJson(url: str, output: str = "output") -> None:
+def ScrapeFromURLToJSON(url: str, output: str = "output") -> None:
+    """
+    Takes a URL given in a string and outputs the relevant data to a file
+    """
     page: PageContent = GetContentFromPage(url)
     pageStr = page.to_json_string()
     outputFile = output + ".json"
@@ -100,13 +120,16 @@ def ScrapeFromURLToJson(url: str, output: str = "output") -> None:
         file.write(pageStr)
 
 def ScrapeFromFile(inputFile: str = "input.txt", baseOutput: str = "output") -> None:
+    """
+    Obtains URLS from a text file and outputs JSON files pertaining to each webpage
+    """
     urls = GetURLsFromText(inputFile)
     i = 0
     for url in urls:
         print(colour.OKGREEN + "url:" + colour.ENDC, url)
         currentOutput = baseOutput + str(i)
         i += 1
-        ScrapeFromURLToJson(url, currentOutput)
+        ScrapeFromURLToJSON(url, currentOutput)
 
     
 def main() -> None:
