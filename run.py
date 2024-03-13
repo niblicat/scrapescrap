@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 import os
 
 from essentials import colour
-from module_2.htmlparser import ScrapeFromFile
+from module_1.webscraper import OnionScraper
 
 def main() -> None: 
     parser = ArgumentParser()
@@ -21,7 +21,7 @@ def main() -> None:
         exit()
     
     print(colour.BOLD + "Scraping urls..." + colour.ENDC)
-    ScrapeFromFile(inputPath, outputBase)
+    OnionScraper.ScrapeFromFile(inputPath, outputBase)
     print(colour.BOLD + colour.OKCYAN + "Success!" + colour.ENDC)
 
 if __name__ == "__main__":

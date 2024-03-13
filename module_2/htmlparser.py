@@ -100,12 +100,13 @@ class Parser(ABC):
     """
     Abstract base class that parses page data and outputs it
     """
-    def ParseDataFromPage(page: str, output: str) -> None:
+    def ParseDataFromPage(page: str, output: str = "output") -> None:
         """
         Uses page HTML as a string to create an output
         """
         raise NotImplementedError("Implemented by subclass")
 
 class OnionParser(Parser):
-    def ParseDataFromPage(page: str, output: str) -> None:
-        ...
+    def ParseDataFromPage(page: str, output: str = "output") -> None:
+        pc: PageContent = OnionPageParser.ParsePageContent(page)
+        OnionOutputJSON.ScrapeFromURLToJSON(pc, output)

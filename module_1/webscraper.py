@@ -69,7 +69,7 @@ class OnionScraper(Scraper):
             currentOutput = baseOutput + str(i)
             i += 1
             
-            pageData = OnionPageDataRetriever(url)
+            pageData = OnionPageDataRetriever.GetPageDataFromURL(url)
             
             # send to parser so it can output the data
             OnionParser.ParseDataFromPage(pageData, currentOutput)
