@@ -79,24 +79,36 @@ class OnionPageParser(PageParser):
         
         return PageContent(title=title, slides=slideList)
 
-class OutputJSON(ABC):
+class OutputPage(ABC):
     """
     Abstract base class that uses outputs PageContent to a JSON-formatted file
     """
     @staticmethod
     @abstractmethod
-    def ScrapeFromURLToJSON(pg: PageContent, output: str = "output") -> None:
+    def PageContentToJSONFile(pg: PageContent, output: str = "output") -> None:
         """
         Accepts a PageContent object and outputs its data to a file
         """
         raise NotImplementedError("Implemented by subclass")
+    @staticmethod
+    @abstractmethod
+    def StringToTXTFile(string: str, output: str = "output") -> None:
+        """
+        Outputs a string to a txt file
+        """
+        raise NotImplementedError("Implemented by subclass")
 
-class OnionOutputJSON(OutputJSON):
-    def ScrapeFromURLToJSON(pg: PageContent, output: str = "output") -> None:
+class OnionOutputPage(OutputPage):
+    def PageContentToJSONFile(pg: PageContent, output: str = "output") -> None:
         pageStr = pg.to_json_string()
         outputFile = output + ".json"
         with open(outputFile, 'w') as file:
             file.write(pageStr)
+
+    def StringToTXTFile(string: str, output: str = "output") -> None:
+        outputFile = output + ".txt"
+        with open(outputFile, 'w') as file:
+            file.write(string)
 
 class Parser(ABC):
     """
@@ -112,5 +124,10 @@ class Parser(ABC):
 
 class OnionParser(Parser):
     def ParseDataFromPage(page: str, output: str ) -> None:
+        dest0 = "Data/raw/" + output
+        dest1 = "Data/processed/" + output
+        
+        # dump raw data before parsing
+        OnionOutputPage.StringToTXTFile(page, dest0)
         pc: PageContent = OnionPageParser.ParsePageContent(page)
-        OnionOutputJSON.ScrapeFromURLToJSON(pc, output)
+        OnionOutputPage.PageContentToJSONFile(pc, dest1)
