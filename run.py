@@ -17,7 +17,7 @@ def main() -> None:
     if (inputType == ""):
         inputPath += ".txt"
         print(colour.WARNING + "Normalising input by adding .txt extension..." + colour.ENDC)
-    else:
+    elif (inputType != ".txt"):
         print(colour.FAIL + "Invalid file type. Please use a .txt file." + colour.ENDC)
         exit()
     
