@@ -87,14 +87,14 @@ class OutputPage(ABC):
     """
     @staticmethod
     @abstractmethod
-    def PageContentToJSONFile(pg: PageContent, output: str = "output") -> None:
+    def PageContentToJSONFile(pg: PageContent, output: str = "output"):
         """
         Accepts a PageContent object and outputs its data to a file
         """
         raise NotImplementedError("Implemented by subclass")
     @staticmethod
     @abstractmethod
-    def StringToTXTFile(string: str, output: str = "output") -> None:
+    def StringToTXTFile(string: str, output: str = "output"):
         """
         Outputs a string to a txt file
         """
@@ -118,7 +118,7 @@ class Parser(ABC):
     """
     @staticmethod
     @abstractmethod
-    def ParseDataFromPage(page: str, output: str) -> None:
+    def ParseDataFromPage(page: str, output: str):
         """
         Uses page HTML as a string to create an output
         """

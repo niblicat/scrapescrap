@@ -1,3 +1,5 @@
+# Manages the high level scrape to parse class and parses the command line arguments
+
 from argparse import ArgumentParser
 import os
 from abc import ABC, abstractmethod

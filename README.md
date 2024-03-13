@@ -52,3 +52,5 @@ See output0.json for an example of the expected output for the [Pros and Cons of
 ## Limitations
 
 This scraper will not work on pages featuring only an image with no paragraph content.
+
+![UML Class Diagram showing the relationships between each class](ScrapeUML.png)
