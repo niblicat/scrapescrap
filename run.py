@@ -2,7 +2,8 @@ from argparse import ArgumentParser
 import os
 
 from essentials import colour
-from module_1.webscraper import OnionScraper
+from module_1.webscraper import OnionScraper, OnionPageDataRetriever
+from module_2.htmlparser import OnionParser
 
 def main() -> None: 
     parser = ArgumentParser()

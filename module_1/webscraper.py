@@ -11,6 +11,7 @@ class PageDataRetriever(ABC):
     """
     Gives the page data as a string given a page URL string
     """
+    @staticmethod
     @abstractmethod
     def GetPageDataFromURL(pageURL: str) -> str:
         raise NotImplementedError("Implemented by subclass")
@@ -31,6 +32,7 @@ class InputFileProcessor(ABC):
     """
     Defines methods for retrieving data from an input file
     """
+    @staticmethod
     @abstractmethod
     def GetURLsFromText(file: str = "input.txt") -> list[str]:
         raise NotImplementedError("Implemented by subclass")
@@ -46,13 +48,14 @@ class OnionInputFileProcessor(InputFileProcessor):
         with open(file) as text:
             urls = text.read().split()
         return urls
-    
+
 class Scraper(ABC):
     """
     Abstract method that defines what the web scraper should do
     """
+    @staticmethod
     @abstractmethod
-    def ScrapeFromFile(inputFile: str, baseOutput: str = "output") -> None:
+    def ScrapeFromFile(inputFile: str, baseOutput: str) -> None:
         """
         Obtains URLS from a text inputFile and outputs JSON files pertaining to each webpage
         Outputs to files named {baseOutput}N where N is the URL index from the inputFile
@@ -60,14 +63,12 @@ class Scraper(ABC):
         raise NotImplementedError("Implemented by subclass")
 
 class OnionScraper(Scraper):
-    def ScrapeFromFile(inputFile: str = "input.txt", baseOutput: str = "output") -> None:
+    def ScrapeFromFile(inputFile: str, baseOutput: str) -> None:
         urls = OnionInputFileProcessor.GetURLsFromText(inputFile)
-        i = 0
-        for url in urls:
+        for i, url in enumerate(urls):
             # output to the terminal which file is being processed
             print(colour.OKGREEN + "url:" + colour.ENDC, url)
             currentOutput = baseOutput + str(i)
-            i += 1
             
             pageData = OnionPageDataRetriever.GetPageDataFromURL(url)
             

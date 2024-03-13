@@ -10,12 +10,14 @@ class SlideParser(ABC):
     """
     Abstract class that defines the methods needed to parse a single slide
     """
+    @staticmethod
     @abstractmethod
     def ParseFirstSlide(section: Tag) -> Slide:
         """
         Parses a slide without a header, which is typically the first slide
         """
         raise NotImplementedError("Implemented by subclass")
+    @staticmethod
     @abstractmethod
     def ParseSlide(section: Tag) -> Slide:
         """
@@ -47,6 +49,7 @@ class PageParser(ABC):
     """
     Abstract class that defines the methods needed to parse an Onion webpage
     """
+    @staticmethod
     @abstractmethod
     def ParsePageContent(unformattedPageContent: str) -> PageContent:
         raise NotImplementedError("Implemented by subclass")
@@ -80,6 +83,7 @@ class OutputJSON(ABC):
     """
     Abstract base class that uses outputs PageContent to a JSON-formatted file
     """
+    @staticmethod
     @abstractmethod
     def ScrapeFromURLToJSON(pg: PageContent, output: str = "output") -> None:
         """
@@ -89,8 +93,6 @@ class OutputJSON(ABC):
 
 class OnionOutputJSON(OutputJSON):
     def ScrapeFromURLToJSON(pg: PageContent, output: str = "output") -> None:
-        # ! implement this elsewhere
-        # page: PageContent = GetContentFromPage(url)
         pageStr = pg.to_json_string()
         outputFile = output + ".json"
         with open(outputFile, 'w') as file:
@@ -100,13 +102,15 @@ class Parser(ABC):
     """
     Abstract base class that parses page data and outputs it
     """
-    def ParseDataFromPage(page: str, output: str = "output") -> None:
+    @staticmethod
+    @abstractmethod
+    def ParseDataFromPage(page: str, output: str) -> None:
         """
         Uses page HTML as a string to create an output
         """
         raise NotImplementedError("Implemented by subclass")
 
 class OnionParser(Parser):
-    def ParseDataFromPage(page: str, output: str = "output") -> None:
+    def ParseDataFromPage(page: str, output: str ) -> None:
         pc: PageContent = OnionPageParser.ParsePageContent(page)
         OnionOutputJSON.ScrapeFromURLToJSON(pc, output)
