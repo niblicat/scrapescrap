@@ -1,9 +1,7 @@
-from essentials import colour, Slide, PageContent
+from essentials import Slide, PageContent
+from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
 from bs4 import Tag
-from abc import ABC, abstractmethod
-
-from module_1.webscraper import GetPageDataFromURL, GetURLsFromText
 
 # * Goal: Use dependence inversion so components are abstracted
 # * and can be swapped out easily
@@ -98,21 +96,16 @@ class OnionOutputJSON(OutputJSON):
         with open(outputFile, 'w') as file:
             file.write(pageStr)
 
-def Scraper(ABC):
-    @abstractmethod
-    def ScrapeFromFile(inputFile: str, baseOutput: str = "output") -> None:
+class Parser(ABC):
+    """
+    Abstract base class that parses page data and outputs it
+    """
+    def ParseDataFromPage(page: str, output: str) -> None:
         """
-        Obtains URLS from a text inputFile and outputs JSON files pertaining to each webpage
-        Outputs to files named {baseOutput}N where N is the URL index from the inputFile
+        Uses page HTML as a string to create an output
         """
         raise NotImplementedError("Implemented by subclass")
 
-def OnionScraper(Scraper):
-    def ScrapeFromFile(inputFile: str = "input.txt", baseOutput: str = "output") -> None:
-        urls = GetURLsFromText(inputFile)
-        i = 0
-        for url in urls:
-            print(colour.OKGREEN + "url:" + colour.ENDC, url)
-            currentOutput = baseOutput + str(i)
-            i += 1
-            ScrapeFromURLToJSON(url, currentOutput)
+class OnionParser(Parser):
+    def ParseDataFromPage(page: str, output: str) -> None:
+        ...
