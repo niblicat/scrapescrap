@@ -45,6 +45,8 @@ This will output `funny0.json`, `funny1.json`, ... , `funnyN.json` given an `inp
 
 ## Output
 
+The processed output will be found inside Data/processed
+
 See output0.json for an example of the expected output for the [Pros and Cons of Shutting Down The Border article](https://www.theonion.com/pros-and-cons-of-shutting-down-the-border-1851235755).
 
 ## Limitations

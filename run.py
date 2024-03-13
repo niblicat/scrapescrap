@@ -18,7 +18,10 @@ class ScrapeToParse(ABC):
         """
         raise NotImplementedError("Implemented by subclass")
     
-class OnionScrapeToParse(ScrapeToParse):
+class ScrapeToParseFromFile(ScrapeToParse):
+    """
+    Scrapes from a text file to a file
+    """
     def __init__(self, scraper: Scraper, parser: Parser, fileProcessor: InputFileProcessor):
         self.scraper: Scraper = scraper
         self.parser: Parser = parser
@@ -36,6 +39,23 @@ class OnionScrapeToParse(ScrapeToParse):
             # send to parser so it can output the data
             self.parser.ParseDataFromPage(pageData, currentOutput)
 
+class ScrapeToParseFromURL(ScrapeToParse):
+    """
+    Scrapes a single url to a file
+    """
+    def __init__(self, scraper: Scraper, parser: Parser):
+        self.scraper: Scraper = scraper
+        self.parser: Parser = parser
+    
+    def Process(self, url: str, outputSignature: str) -> None:
+        # output to the terminal which file is being processed
+        print(colour.OKGREEN + "url:" + colour.ENDC, url)
+        
+        pageData = self.scraper.GetPageDataFromURL(url)
+        
+        # send to parser so it can output the data
+        self.parser.ParseDataFromPage(pageData, outputSignature)
+
 def main() -> None: 
     parser = ArgumentParser()
     parser.add_argument(help="Input text file", dest="input_path", type=str)
@@ -52,7 +72,7 @@ def main() -> None:
         print(colour.FAIL + "Invalid file type. Please use a .txt file." + colour.ENDC)
         exit()
     
-    scrapeToParse = OnionScrapeToParse(OnionScraper, OnionParser, OnionInputFileProcessor)
+    scrapeToParse = ScrapeToParseFromFile(OnionScraper, OnionParser, OnionInputFileProcessor)
     print(colour.BOLD + "Scraping urls..." + colour.ENDC)
     scrapeToParse.Process(inputPath, outputBase)
     print(colour.BOLD + colour.OKCYAN + "Success!" + colour.ENDC)
