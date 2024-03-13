@@ -1,5 +1,8 @@
 import requests
 from requests import Response
+from abc import ABC, abstractmethod
+
+# class PageDataRetriever(ABC)
 
 def GetURLsFromText(file: str = "input.txt") -> list[str]:
     """
@@ -9,10 +12,10 @@ def GetURLsFromText(file: str = "input.txt") -> list[str]:
         urls = text.read().split()
     return urls
 
-def GetPageDataFromURL(pageURL: str) -> Response:
+def GetPageDataFromURL(pageURL: str) -> str:
     """
     Retrieves the main page data from a URL
     """
     page: Response = requests.get(pageURL)
     
-    return page
+    return page.text
