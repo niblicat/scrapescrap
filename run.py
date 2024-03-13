@@ -6,6 +6,9 @@ from essentials import colour
 from module_1.webscraper import Scraper, OnionScraper, InputFileProcessor, OnionInputFileProcessor
 from module_2.htmlparser import Parser, OnionParser
 
+# * Goal: Use dependence inversion so components are abstracted
+# * and can be swapped out easily
+
 class ScrapeToParse(ABC):
     """
     Abstract base class that scrapes Onion pages and outputs them

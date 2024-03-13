@@ -1,3 +1,5 @@
+# Handles the parsing of an html file and outputs it to the raw and processed directory
+
 from essentials import Slide, PageContent
 from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup

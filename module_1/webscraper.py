@@ -1,3 +1,5 @@
+# Reads from a text file containing URLs and grabs the HTML content from those URLs
+
 from module_2.htmlparser import OnionParser
 from abc import ABC, abstractmethod
 from requests import Response
