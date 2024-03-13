@@ -1,9 +1,40 @@
 from argparse import ArgumentParser
 import os
+from abc import ABC, abstractmethod
 
 from essentials import colour
-from module_1.webscraper import OnionScraper, OnionPageDataRetriever
-from module_2.htmlparser import OnionParser
+from module_1.webscraper import Scraper, OnionScraper, InputFileProcessor, OnionInputFileProcessor
+from module_2.htmlparser import Parser, OnionParser
+
+class ScrapeToParse(ABC):
+    """
+    Abstract base class that scrapes Onion pages and outputs them
+    """
+    @abstractmethod
+    def Process(self, inputFile: str, outputSignature: str):
+        """
+        Given a file containing references to Onion content,
+        output the relevant information
+        """
+        raise NotImplementedError("Implemented by subclass")
+    
+class OnionScrapeToParse(ScrapeToParse):
+    def __init__(self, scraper: Scraper, parser: Parser, fileProcessor: InputFileProcessor):
+        self.scraper: Scraper = scraper
+        self.parser: Parser = parser
+        self.processor: InputFileProcessor = fileProcessor
+
+    def Process(self, inputFile: str, outputSignature: str) -> None:
+        urls = self.processor.GetURLsFromText(inputFile)
+        for i, url in enumerate(urls):
+            # output to the terminal which file is being processed
+            print(colour.OKGREEN + "url:" + colour.ENDC, url)
+            currentOutput = outputSignature + str(i)
+            
+            pageData = self.scraper.GetPageDataFromURL(url)
+            
+            # send to parser so it can output the data
+            self.parser.ParseDataFromPage(pageData, currentOutput)
 
 def main() -> None: 
     parser = ArgumentParser()
@@ -21,8 +52,9 @@ def main() -> None:
         print(colour.FAIL + "Invalid file type. Please use a .txt file." + colour.ENDC)
         exit()
     
+    scrapeToParse = OnionScrapeToParse(OnionScraper, OnionParser, OnionInputFileProcessor)
     print(colour.BOLD + "Scraping urls..." + colour.ENDC)
-    OnionScraper.ScrapeFromFile(inputPath, outputBase)
+    scrapeToParse.Process(inputPath, outputBase)
     print(colour.BOLD + colour.OKCYAN + "Success!" + colour.ENDC)
 
 if __name__ == "__main__":
