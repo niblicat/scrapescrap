@@ -11,7 +11,7 @@ Scrape multiple URLs provided in a text file, each outputting as a JSON file.
 2. **Clone the Repository**:  
    Clone this repository onto your local machine using Git CLI:
    ```bash
-   git clone https://github.com/niblicat/scrapescrape.git
+   git clone https://github.com/niblicat/onionscrape.git
    ```
 
 3. **Set Up Environment**:
@@ -24,7 +24,7 @@ Scrape multiple URLs provided in a text file, each outputting as a JSON file.
 4. **Activate Environment**:
    To activate the environment, enter:
    ```bash
-   conda activate scrapescrape
+   conda activate onionscrape
    ```
 
 5. **That's it!**:
@@ -34,12 +34,12 @@ Scrape multiple URLs provided in a text file, each outputting as a JSON file.
 
 Run the scraper on an input file `input.txt` using the following command:
 ```bash
-python onionscrape.py input.txt
+python run.py input.txt
 ```
 
 To change the default JSON output file name, use the `--output` argument. For example:
 ```bash
-python onionscrape.py input.txt --output funny
+python run.py input.txt --output funny
 ```
 This will output `funny0.json`, `funny1.json`, ... , `funnyN.json` given an `input.txt` file containing N URLs.
 
