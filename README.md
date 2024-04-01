@@ -43,6 +43,12 @@ python run.py input.txt --output funny
 ```
 This will generate `funny0.json`, `funny1.json`, ..., `funnyN.json` in the processed directory based on an `input.txt` file containing N URLs.
 
+### Summaries
+
+You can generate a summary using the power of GPT 3.5. If you have not set up an API key, follow these steps:
+
+!write steps here later!
+
 For generating a summary for each URL in your input, employ the `--summary` argument.
 ```bash
 python run.py input.txt --summary
