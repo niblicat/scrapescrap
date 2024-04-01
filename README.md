@@ -43,17 +43,33 @@ python run.py input.txt --output funny
 ```
 This will generate `funny0.json`, `funny1.json`, ..., `funnyN.json` in the processed directory based on an `input.txt` file containing N URLs.
 
-### Summaries
-
-You can generate a summary using the power of GPT 3.5. If you have not set up an API key, follow these steps:
-
-!write steps here later!
-
-For generating a summary for each URL in your input, employ the `--summary` argument.
+To generate a summary for each URL in your input, employ the `--summary` argument. This will require obtaining an OpenAI API key. Follow the instructions below for more information.
 ```bash
 python run.py input.txt --summary
 ```
 This will produce `output0.txt`, `output1.txt`, ..., `outputN.txt` in the summary directory given an `input.txt` file containing N URLs.
+
+### Summaries
+
+You can generate a summary using the power of GPT 3.5. To set up an API key for this program, follow these steps:
+
+1. **Open the OpenAI API Page**:
+   - Navigate to the [https://openai.com/blog/openai-api](OpenAI API website) and sign up or login. Note that you may have to pay for credits if you are using an existing account. 
+
+2. **Make a new API key**:
+   - Visit the [API key page](https://platform.openai.com/api-keys). From here, you can create a new API key by with the "Create new secret key" button, shown below:
+![API key page with red arrow pointing to the button of interest](apikeypage.png)
+   - Name the key anything you want. Once generated, save the key somewhere, because you won't be able to copy it later!
+
+3. **Editing .env**:
+   - Place your key inside of the `.env.template` file, replacing the text that says "your_api_key_here". Then, rename the file to `.env`.
+![template for the .env file](envapikey.png)
+
+4. **Testing your key**:
+   - Use the below command to test your API key. Hopefully, you should receive a message from a very silly goober if you have succeeded.
+   ```bash
+   python gpttest.py
+   ```
 
 ## Output
 
