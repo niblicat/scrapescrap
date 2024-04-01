@@ -41,11 +41,19 @@ class OnionSlideParser(SlideParser):
         headerDiv: Tag = section.contents[3]
         header = headerDiv.h2.getText()
         # print(header) # Slide head
+        # TODO: Special case that may change in the future, may fix
+        if (header == "You’ve Made It This Far..."):
+            return None
+
         contentDiv: Tag = section.contents[4]
+        # print(contentDiv)
         imageLink = contentDiv.img['src']
         # print(imageLink)
-        content = contentDiv.p.getText()
-        # print("content", content)
+        content = ""
+        if contentDiv.p is not None:
+            content = contentDiv.p.getText()
+            # print("content", content)
+
         return Slide(header=header, image=imageLink, text=content)
 
 class PageParser(ABC):
@@ -78,7 +86,8 @@ class OnionPageParser(PageParser):
 
         for section in sections[1:-1]:
             newSlide = OnionSlideParser.ParseSlide(section)
-            slideList.append(newSlide)
+            if (type(newSlide) == Slide):
+                slideList.append(newSlide)
         
         return PageContent(title=title, slides=slideList)
 
@@ -140,4 +149,5 @@ class OnionParser(Parser):
             # get a summary and place it in the summary directory
             pageText = pc.__str__()
             summary = OpenAIRequest.GenerateSummary(pageText)
-            OnionOutputPage.StringToTXTFile(summary, dest2)
+            summaryOutput = pc.title + "\n" + summary # add title to output txt
+            OnionOutputPage.StringToTXTFile(summaryOutput, dest2)

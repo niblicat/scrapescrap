@@ -32,7 +32,7 @@ class Slide:
             "text": self.text
         }
     def __str__(self) -> str:
-        return self.text
+        return self.header + "\n" + self.text
 
 @dataclass
 class PageContent():
@@ -47,7 +47,7 @@ class PageContent():
         dicts = [slide.to_dict() for slide in self.slides]
         return json.dumps({"title": self.title, "slides": dicts}, indent=2)
     def __str__(self) -> str:
-        result = ""
+        result = self.title + " "
         for slide in self.slides:
             result += slide.__str__() + "\n"
         return result
