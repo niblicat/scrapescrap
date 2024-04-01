@@ -1,6 +1,5 @@
 # Handles the parsing of an html file and outputs it to the raw and processed directory
 
-from module_3.generatedsummaries import OpenAIRequest
 from essentials import Slide, PageContent
 from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
@@ -146,6 +145,7 @@ class OnionParser(Parser):
         pc: PageContent = OnionPageParser.ParsePageContent(page)
         OnionOutputPage.PageContentToFile(pc, dest1)
         if (createSummary):
+            from module_3.generatedsummaries import OpenAIRequest
             # get a summary and place it in the summary directory
             pageText = pc.__str__()
             summary = OpenAIRequest.GenerateSummary(pageText)

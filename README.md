@@ -32,33 +32,25 @@ Scrape multiple URLs provided in a text file, each outputting as a JSON file.
 
 ## Usage
 
-Run the scraper on an input file `input.txt` using the following command:
+Run the scraper on an input file named `input.txt` using the following command:
 ```bash
 python run.py input.txt
 ```
 
-Your processed files will be located in the /Data/processed directory.
-
-To change the default JSON output file name, use the `--output` argument. For example:
+To customize the JSON output file name, utilize the `--output` argument. For instance:
 ```bash
 python run.py input.txt --output funny
 ```
-This will output `funny0.json`, `funny1.json`, ... , `funnyN.json` in the processed directory given an `input.txt` file containing N URLs.
+This will generate `funny0.json`, `funny1.json`, ..., `funnyN.json` in the processed directory based on an `input.txt` file containing N URLs.
 
-To generate a summary for each URL in your input, use the `--summary` argument.
+For generating a summary for each URL in your input, employ the `--summary` argument.
 ```bash
 python run.py input.txt --summary
 ```
-This will output `output0.txt`, `output1.txt`, ... , `outputN.txt` in the summary directory given an `input.txt` file containing N URLs.
+This will produce `output0.txt`, `output1.txt`, ..., `outputN.txt` in the summary directory given an `input.txt` file containing N URLs.
 
 ## Output
 
-The processed output will be found inside Data/processed
+The processed output will be found inside `Data/processed`.
 
 See output0.json for an example of the expected output for the [Pros and Cons of Shutting Down The Border article](https://www.theonion.com/pros-and-cons-of-shutting-down-the-border-1851235755).
-
-## Limitations
-
-This scraper will not work on pages featuring only an image with no paragraph content.
-
-![UML Class Diagram showing the relationships between each class](ScrapeUML.png)
