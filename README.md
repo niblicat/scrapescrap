@@ -58,6 +58,8 @@ You can generate a summary using the power of GPT 3.5. To set up an API key for 
 2. **Make a new API key**:
    Visit the [API key page](https://platform.openai.com/api-keys). From here, you can create a new API key by with the "Create new secret key" button, shown below:
 ![API key page with red arrow pointing to the button of interest](apikeypage.png)
+   
+3. **Name and copy key**:
    Name the key anything you want. Once generated, save the key somewhere, because you won't be able to copy it later!
 
 3. **Editing .env**:
