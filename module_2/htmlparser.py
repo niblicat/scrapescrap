@@ -1,5 +1,6 @@
 # Handles the parsing of an html file and outputs it to the raw and processed directory
 
+from module_3.generatedsummaries import OpenAIRequest
 from essentials import Slide, PageContent
 from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
@@ -87,7 +88,7 @@ class OutputPage(ABC):
     """
     @staticmethod
     @abstractmethod
-    def PageContentToJSONFile(pg: PageContent, output: str = "output"):
+    def PageContentToFile(pg: PageContent, output: str = "output"):
         """
         Accepts a PageContent object and outputs its data to a file
         """
@@ -101,7 +102,7 @@ class OutputPage(ABC):
         raise NotImplementedError("Implemented by subclass")
 
 class OnionOutputPage(OutputPage):
-    def PageContentToJSONFile(pg: PageContent, output: str = "output") -> None:
+    def PageContentToFile(pg: PageContent, output: str = "output") -> None:
         pageStr = pg.to_json_string()
         outputFile = output + ".json"
         with open(outputFile, 'w') as file:
@@ -111,6 +112,7 @@ class OnionOutputPage(OutputPage):
         outputFile = output + ".txt"
         with open(outputFile, 'w') as file:
             file.write(string)
+
 
 class Parser(ABC):
     """
@@ -128,8 +130,16 @@ class OnionParser(Parser):
     def ParseDataFromPage(page: str, output: str ) -> None:
         dest0 = "Data/raw/" + output
         dest1 = "Data/processed/" + output
+        dest2 = "Data/summary/" + output
         
         # dump raw data before parsing
         OnionOutputPage.StringToTXTFile(page, dest0)
         pc: PageContent = OnionPageParser.ParsePageContent(page)
-        OnionOutputPage.PageContentToJSONFile(pc, dest1)
+        OnionOutputPage.PageContentToFile(pc, dest1)
+        
+        # get a summary and place it in the summary directory
+        pageText = pc.__str__()
+        print(pageText)
+        summary = OpenAIRequest.GenerateSummary(pageText)
+        print(summary)
+        OnionOutputPage.StringToTXTFile(summary, dest2)
