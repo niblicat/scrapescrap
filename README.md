@@ -8,15 +8,14 @@ Scrape multiple URLs provided in a text file, each outputting as a JSON file.
    - [Conda](https://docs.conda.io/en/latest/)
    - [Git CLI](https://cli.github.com/)
 
-2. **Clone the Repository**:  
+2. **Clone the Repository**: 
    Clone this repository onto your local machine using Git CLI:
    ```bash
    git clone https://github.com/niblicat/onionscrape.git
    ```
 
 3. **Set Up Environment**:
-   - Navigate to the scraper directory (contains `scraper.py` and `environment.yml`) in the terminal.
-   - Copy the Python environment using Conda:
+   Navigate to the scraper directory (contains `scraper.py` and `environment.yml`) in the terminal. Once there, copy the Python environment using Conda:
      ```bash
      conda env create -f environment.yml
      ```
@@ -53,20 +52,20 @@ This will produce `output0.txt`, `output1.txt`, ..., `outputN.txt` in the summar
 
 You can generate a summary using the power of GPT 3.5. To set up an API key for this program, follow these steps:
 
-1. **Open the OpenAI API Page**:
-   - Navigate to the [https://openai.com/blog/openai-api](OpenAI API website) and sign up or login. Note that you may have to pay for credits if you are using an existing account. 
+1. **Open the OpenAI API page**:
+   Navigate to the [https://openai.com/blog/openai-api](OpenAI API website) and sign up or login. Note that you may have to pay for credits if you are using an existing account. 
 
 2. **Make a new API key**:
-   - Visit the [API key page](https://platform.openai.com/api-keys). From here, you can create a new API key by with the "Create new secret key" button, shown below:
+   Visit the [API key page](https://platform.openai.com/api-keys). From here, you can create a new API key by with the "Create new secret key" button, shown below:
 ![API key page with red arrow pointing to the button of interest](apikeypage.png)
-   - Name the key anything you want. Once generated, save the key somewhere, because you won't be able to copy it later!
+   Name the key anything you want. Once generated, save the key somewhere, because you won't be able to copy it later!
 
 3. **Editing .env**:
-   - Place your key inside of the `.env.template` file, replacing the text that says "your_api_key_here". Then, rename the file to `.env`.
+   Place your key inside of the `.env.template` file, replacing the text that says "your_api_key_here". Then, rename the file to `.env`.
 ![template for the .env file](envapikey.png)
 
 4. **Testing your key**:
-   - Use the below command to test your API key. Hopefully, you should receive a message from a very silly goober if you have succeeded.
+   Use the below command to test your API key. Hopefully, you should receive a message from a very silly goober if you have succeeded.
    ```bash
    python gpttest.py
    ```
