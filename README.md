@@ -62,11 +62,11 @@ You can generate a summary using the power of GPT 3.5. To set up an API key for 
 3. **Name and copy key**:
    Name the key anything you want. Once generated, save the key somewhere, because you won't be able to copy it later!
 
-3. **Editing .env**:
+4. **Editing .env**:
    Place your key inside of the `.env.template` file, replacing the text that says "your_api_key_here". Then, rename the file to `.env`.
 ![template for the .env file](envapikey.png)
 
-4. **Testing your key**:
+5. **Testing your key**:
    Use the below command to test your API key. Hopefully, you should receive a message from a very silly goober if you have succeeded.
    ```bash
    python gpttest.py
