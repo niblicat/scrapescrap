@@ -53,7 +53,7 @@ This will produce `output0.txt`, `output1.txt`, ..., `outputN.txt` in the summar
 You can generate a summary using the power of GPT 3.5. To set up an API key for this program, follow these steps:
 
 1. **Open the OpenAI API page**:
-   Navigate to the [https://openai.com/blog/openai-api](OpenAI API website) and sign up or login. Note that you may have to pay for credits if you are using an existing account. 
+   Navigate to the [OpenAI API website](https://openai.com/blog/openai-api) and sign up or login. Note that you may have to pay for credits if you are using an existing account. 
 
 2. **Make a new API key**:
    Visit the [API key page](https://platform.openai.com/api-keys). From here, you can create a new API key by with the "Create new secret key" button, shown below:
