@@ -37,11 +37,19 @@ Run the scraper on an input file `input.txt` using the following command:
 python run.py input.txt
 ```
 
+Your processed files will be located in the /Data/processed directory.
+
 To change the default JSON output file name, use the `--output` argument. For example:
 ```bash
 python run.py input.txt --output funny
 ```
-This will output `funny0.json`, `funny1.json`, ... , `funnyN.json` given an `input.txt` file containing N URLs.
+This will output `funny0.json`, `funny1.json`, ... , `funnyN.json` in the processed directory given an `input.txt` file containing N URLs.
+
+To generate a summary for each URL in your input, use the `--summary` argument.
+```bash
+python run.py input.txt --summary
+```
+This will output `output0.txt`, `output1.txt`, ... , `outputN.txt` in the summary directory given an `input.txt` file containing N URLs.
 
 ## Output
 

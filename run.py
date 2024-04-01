@@ -32,7 +32,7 @@ class ScrapeToParseFromFile(ScrapeToParse):
         self.parser: Parser = parser
         self.processor: InputFileProcessor = fileProcessor
 
-    def Process(self, inputFile: str, outputSignature: str) -> None:
+    def Process(self, inputFile: str, outputSignature: str, doSummary: bool = False) -> None:
         urls = self.processor.GetURLsFromText(inputFile)
         for i, url in enumerate(urls):
             # output to the terminal which file is being processed
@@ -42,7 +42,7 @@ class ScrapeToParseFromFile(ScrapeToParse):
             pageData = self.scraper.GetPageDataFromURL(url)
             
             # send to parser so it can output the data
-            self.parser.ParseDataFromPage(pageData, currentOutput)
+            self.parser.ParseDataFromPage(pageData, currentOutput, doSummary)
 
 class ScrapeToParseFromURL(ScrapeToParse):
     """
@@ -64,10 +64,12 @@ class ScrapeToParseFromURL(ScrapeToParse):
 def main() -> None: 
     parser = ArgumentParser()
     parser.add_argument(help="Input text file", dest="input_path", type=str)
-    parser.add_argument("--output", help="Output file base name (no extension)", dest="output_base", type=str, default="output")
+    parser.add_argument("--output", "-o", help="Output file base name (no extension)", dest="output_base", type=str, default="output")
+    parser.add_argument("--summary", "-s", help="Output LLM-powered summaries", dest="do_summaries", action="store_true")
     args = parser.parse_args()
     inputPath = args.input_path
     outputBase = args.output_base
+    doSummaries = args.do_summaries
 
     inputType = os.path.splitext(inputPath)[-1].lower()
     if (inputType == ""):
@@ -79,7 +81,7 @@ def main() -> None:
     
     scrapeToParse = ScrapeToParseFromFile(OnionScraper, OnionParser, OnionInputFileProcessor)
     print(colour.BOLD + "Scraping urls..." + colour.ENDC)
-    scrapeToParse.Process(inputPath, outputBase)
+    scrapeToParse.Process(inputPath, outputBase, doSummaries)
     print(colour.BOLD + colour.OKCYAN + "Success!" + colour.ENDC)
 
 if __name__ == "__main__":

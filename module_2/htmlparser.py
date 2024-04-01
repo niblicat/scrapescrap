@@ -127,7 +127,7 @@ class Parser(ABC):
         raise NotImplementedError("Implemented by subclass")
 
 class OnionParser(Parser):
-    def ParseDataFromPage(page: str, output: str ) -> None:
+    def ParseDataFromPage(page: str, output: str, createSummary: bool = False) -> None:
         dest0 = "Data/raw/" + output
         dest1 = "Data/processed/" + output
         dest2 = "Data/summary/" + output
@@ -136,10 +136,8 @@ class OnionParser(Parser):
         OnionOutputPage.StringToTXTFile(page, dest0)
         pc: PageContent = OnionPageParser.ParsePageContent(page)
         OnionOutputPage.PageContentToFile(pc, dest1)
-        
-        # get a summary and place it in the summary directory
-        pageText = pc.__str__()
-        print(pageText)
-        summary = OpenAIRequest.GenerateSummary(pageText)
-        print(summary)
-        OnionOutputPage.StringToTXTFile(summary, dest2)
+        if (createSummary):
+            # get a summary and place it in the summary directory
+            pageText = pc.__str__()
+            summary = OpenAIRequest.GenerateSummary(pageText)
+            OnionOutputPage.StringToTXTFile(summary, dest2)
