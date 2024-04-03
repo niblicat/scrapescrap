@@ -9,4 +9,4 @@ completion = client.chat.completions.create(
     ]
 )
 print("Q: What is the tastiest food?")
-print("A:" + completion.choices[0].message.content)
+print("A: " + completion.choices[0].message.content)
