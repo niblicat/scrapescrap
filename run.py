@@ -61,7 +61,7 @@ class ScrapeToParseFromURL(ScrapeToParse):
         # send to parser so it can output the data
         self.parser.ParseDataFromPage(pageData, outputSignature)
 
-def main() -> None: 
+def ParseArguments() -> tuple[str, str, bool]:
     parser = ArgumentParser()
     parser.add_argument(help="Input text file", dest="input_path", type=str)
     parser.add_argument("--output", "-o", help="Output file base name (no extension)", dest="output_base", type=str, default="output")
@@ -78,6 +78,11 @@ def main() -> None:
     elif (inputType != ".txt"):
         print(colour.FAIL + "Invalid file type. Please use a .txt file." + colour.ENDC)
         exit()
+        
+    return (inputPath, outputBase, doSummaries)
+
+def main() -> None: 
+    inputPath, outputBase, doSummaries = ParseArguments()
     
     scrapeToParse = ScrapeToParseFromFile(OnionScraper, OnionParser, OnionInputFileProcessor)
     print(colour.BOLD + "Scraping urls..." + colour.ENDC)
