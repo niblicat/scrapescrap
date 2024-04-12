@@ -18,4 +18,6 @@ def test_InputFileProcessor():
         webscraper.InputFileProcessor.GetURLsFromText(test_url)
 
 def test_OnionInputFileProcessor():
-    assert len(webscraper.OnionInputFileProcessor.GetURLsFromText("testinput.txt")) != 0
+    """empty input file should raise an error"""
+    with pytest.raises(ValueError):
+        webscraper.OnionInputFileProcessor.GetURLsFromText("testinput.txt")

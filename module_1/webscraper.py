@@ -51,4 +51,6 @@ class OnionInputFileProcessor(InputFileProcessor):
         """
         with open(file) as text:
             urls = text.read().split()
+        if len(urls) == 0:
+            raise ValueError("Input file is empty...")
         return urls
