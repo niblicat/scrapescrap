@@ -1,4 +1,4 @@
-#
+# Defines essential structures for the program
 from dataclasses import dataclass
 import json
 
