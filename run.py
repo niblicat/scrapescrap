@@ -62,6 +62,9 @@ class ScrapeToParseFromURL(ScrapeToParse):
         self.parser.ParseDataFromPage(pageData, outputSignature)
 
 def ParseArguments() -> tuple[str, str, bool]:
+    """
+    Parses command line arguments
+    """
     parser = ArgumentParser()
     parser.add_argument(help="Input text file", dest="input_path", type=str)
     parser.add_argument("--output", "-o", help="Output file base name (no extension)", dest="output_base", type=str, default="output")
