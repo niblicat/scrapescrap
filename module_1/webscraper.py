@@ -25,7 +25,10 @@ class OnionScraper(Scraper):
         """
         Retrieves the main page data from a URL
         """
-        page: Response = requests.get(pageURL)
+        if "https://" in pageURL:
+            page: Response = requests.get(pageURL)
+        else:
+            page: Response = requests.get("https://" + pageURL.strip())
         
         return page.text
 
