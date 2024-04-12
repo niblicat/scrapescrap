@@ -18,4 +18,4 @@ def test_InputFileProcessor():
         webscraper.InputFileProcessor.GetURLsFromText(test_url)
 
 def test_OnionInputFileProcessor():
-    assert len(webscraper.OnionInputFileProcessor.GetURLsFromText("input.txt")) != 0
+    assert len(webscraper.OnionInputFileProcessor.GetURLsFromText("testinput.txt")) != 0
